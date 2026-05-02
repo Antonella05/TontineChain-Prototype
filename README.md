@@ -193,9 +193,9 @@ Ce prototype a été développé dans le cadre du MIABE Hackathon 2026. Il valid
 Équipe béninoise engagée pour l'inclusion financière et la blockchain en Afrique.
 
 - [ ] Hope ALOKPO
-- [ ]Fawann AZA
-- [ ]Bienvenu ESSEGNON
-- [ ]Antonella TAMADAHO
+- [ ] Fawann AZA
+- [ ] Bienvenu ESSEGNON
+- [ ] Antonella TAMADAHO
 
 ---
 
