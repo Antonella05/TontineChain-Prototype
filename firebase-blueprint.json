@@ -1,0 +1,56 @@
+{
+  "entities": {
+    "Tontine": {
+      "title": "Tontine",
+      "description": "A collaborative savings circle on the blockchain",
+      "type": "object",
+      "properties": {
+        "nom": { "type": "string" },
+        "montant": { "type": "number" },
+        "freq": { "type": "string", "enum": ["hebdo", "bimensuel", "mensuel", "trimestriel"] },
+        "startDate": { "type": "string", "format": "date" },
+        "creatorId": { "type": "string" },
+        "contractAddress": { "type": "string" },
+        "currentRound": { "type": "number" },
+        "status": { "type": "string", "enum": ["active", "completed"] },
+        "membres": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "nom": { "type": "string" },
+              "initials": { "type": "string" },
+              "paidInCurrentRound": { "type": "boolean" }
+            }
+          }
+        }
+      },
+      "required": ["nom", "montant", "freq", "creatorId", "membres"]
+    },
+    "Transaction": {
+      "title": "Transaction",
+      "description": "A record of payment or payout",
+      "type": "object",
+      "properties": {
+        "tontineId": { "type": "string" },
+        "type": { "type": "string", "enum": ["contribution", "reception"] },
+        "amount": { "type": "number" },
+        "date": { "type": "string", "format": "date-time" },
+        "txHash": { "type": "string" },
+        "memberId": { "type": "string" }
+      },
+      "required": ["tontineId", "type", "amount", "date", "txHash"]
+    }
+  },
+  "firestore": {
+    "/tontines/{tontineId}": {
+      "schema": "Tontine",
+      "description": "Main tontine records"
+    },
+    "/transactions/{txId}": {
+      "schema": "Transaction",
+      "description": "Financial history"
+    }
+  }
+}

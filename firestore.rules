@@ -1,0 +1,63 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null && request.auth.token.email_verified == true;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    function isMember(membres) {
+      // In a real multi-user app, we'd check if request.auth.uid is in the membres array IDs
+      // For this tontine, we'll check if any member has the matching uid
+      return membres.exists(m, m.id == request.auth.uid);
+    }
+
+    // Tontines
+    match /tontines/{tontineId} {
+      allow get: if isSignedIn() && (existing().creatorId == request.auth.uid || isMember(existing().membres));
+      allow list: if isSignedIn() && (resource.data.creatorId == request.auth.uid || isMember(resource.data.membres));
+      
+      allow create: if isSignedIn() && 
+        isValidId(tontineId) &&
+        incoming().creatorId == request.auth.uid &&
+        incoming().nom is string && incoming().nom.size() >= 3 && incoming().nom.size() <= 100 &&
+        incoming().membres.size() >= 2 &&
+        incoming().currentRound == 1;
+
+      allow update: if isSignedIn() && (
+        // Action: Mark as paid or advance round
+        (incoming().creatorId == existing().creatorId && 
+         incoming().diff(existing()).affectedKeys().hasOnly(['membres', 'currentRound', 'roundState']))
+      );
+    }
+
+    // Transactions
+    match /transactions/{txId} {
+      allow read: if isSignedIn() && (
+        get(/databases/$(database)/documents/tontines/$(resource.data.tontineId)).data.creatorId == request.auth.uid ||
+        isMember(get(/databases/$(database)/documents/tontines/$(resource.data.tontineId)).data.membres)
+      );
+      
+      allow create: if isSignedIn() && 
+        isValidId(txId) &&
+        incoming().memberId == request.auth.uid;
+    }
+  }
+}

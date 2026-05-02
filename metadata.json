@@ -1,0 +1,6 @@
+{
+  "name": "TontineChain",
+  "description": "Application décentralisée de gestion de tontines sécurisée par la blockchain Celo.",
+  "requestFramePermissions": [],
+  "majorCapabilities": []
+}
