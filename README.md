@@ -1,6 +1,6 @@
 # TontineChain
 
-> **Prototype fonctionnel — MIABE Hackathon 2026 | Équipe 4Ward Chain (BJ-09)**
+> **Prototype fonctionnel - MIABE Hackathon 2026 | Équipe 4Ward Chain (BJ-09)**
 
 TontineChain modernise l'épargne rotative africaine en combinant la transparence de la blockchain **Celo** avec la simplicité du Mobile Money. Le résultat : une tontine où les règles sont fixées à l'avance, les paiements sont tracés de façon immuable et la cagnotte est libérée automatiquement, sans intervention humaine.
 
@@ -192,10 +192,10 @@ Ce prototype a été développé dans le cadre du MIABE Hackathon 2026. Il valid
 
 Équipe béninoise engagée pour l'inclusion financière et la blockchain en Afrique.
 
-Hope ALOKPO
-Fawann AZA
-Bienvenu ESSEGNON
-Antonella TAMADAHO
+- [ ] Hope ALOKPO
+- [ ]Fawann AZA
+- [ ]Bienvenu ESSEGNON
+- [ ]Antonella TAMADAHO
 
 ---
 
